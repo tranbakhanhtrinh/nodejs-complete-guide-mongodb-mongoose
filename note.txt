@@ -1,0 +1,2 @@
+use: nên để ý đến thứ tự của path của request
+get, post: không cần để ý đến thứ tự path vì express sẽ match chính xác path của request.

@@ -1,7 +1,9 @@
 const Product = require("../models/product");
 
 exports.getProducts = (req, res, next) => {
-    Product.fetchAll()
+    Product.find()
+        // .select('title price -_id')  chọn field muốn lấy. thêm dấu "-" trước field ko muốn lấy
+        // .populate('userId') lấy những data có liên quan. Vd: lấy userId trong model Product rồi tra trong model User, lấy thông tin user mà có cái userId đó
         .then(products => {
             res.render("admin/products", {
                 pageTitle: "Admin Products",
@@ -29,7 +31,8 @@ exports.postAddProduct = (req, res, next) => {
         title: title,
         price: price,
         description: description,
-        imageUrl: imageUrl
+        imageUrl: imageUrl,
+        userId: req.user
     })
     product.save()
         .then(result => {
@@ -68,8 +71,13 @@ exports.postEditProduct = (req, res, next) => {
     const updatedImageUrl = req.body.imageUrl;
     const updatedPrice = req.body.price;
     const updatedDescription = req.body.description;
-    const product = new Product(updatedTitle, updatedPrice, updatedImageUrl, updatedDescription, prodId)
-    product.save()
+    Product.findById(prodId).then(product => {
+        product.title = updatedTitle;
+        product.price = updatedPrice;
+        product.imageUrl = updatedImageUrl;
+        product.description = updatedDescription
+        return product.save();
+    })
         .then(result => {
             console.log("UPDATED!")
             res.redirect("/admin/products")
@@ -80,7 +88,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.postDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    Product.deleteById(prodId)
+    Product.findByIdAndRemove(prodId)
         .then(result => {
             console.log("DELETED !!!")
             res.redirect("/admin/products");

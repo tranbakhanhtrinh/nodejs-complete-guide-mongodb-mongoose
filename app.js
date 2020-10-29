@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 
 const adminRoute = require('./routes/admin');
 const shopRoute = require('./routes/shop');
+const authRoute = require('./routes/auth');
 const User = require('./models/user');
 
 const errorController = require("./controllers/error");
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 
 app.use("/admin", adminRoute); // if we add the first argument, the routes in adminRoute will automatically add a prefix /admin
 app.use(shopRoute);
+app.use(authRoute);
 
 app.use(errorController.get404);
 

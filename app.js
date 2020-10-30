@@ -2,6 +2,8 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const session = require('express-session');
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const adminRoute = require('./routes/admin');
 const shopRoute = require('./routes/shop');
@@ -10,20 +12,30 @@ const User = require('./models/user');
 
 const errorController = require("./controllers/error");
 
+const MONGODB_URI = "mongodb+srv://tranbakhanhtrinh:airblade08@nodejs-complete-guide.fqrra.mongodb.net/nodejs-complete-guide-mongo-mongoose?retryWrites=true&w=majority"
+
 const app = express();
+const store = new MongoDBStore({
+    uri: MONGODB_URI,
+    collection: "sessions"
+})
 
 app.set("view engine", "ejs");
 app.set("views", "views"); // the second param is the name of folder "views"
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')))
+app.use(session({ secret: "my secret", resave: false, saveUninitialized: false, store: store }))
 // console.log(path.join(__dirname));
 
 app.use((req, res, next) => {
-    User.findById("5f98f993b0d98c104acf9c8e")
+    if (!req.session.user) {
+        return next();
+    }
+    User.findById(req.session.user._id)
         .then(user => {
             req.user = user;
-            next();
+            next()
         })
         .catch(err => { console.log(err) })
 })
@@ -36,7 +48,7 @@ app.use(errorController.get404);
 
 const port = process.env.PORT || 3000;
 
-mongoose.connect("mongodb+srv://tranbakhanhtrinh:airblade08@nodejs-complete-guide.fqrra.mongodb.net/nodejs-complete-guide-mongo-mongoose?retryWrites=true&w=majority")
+mongoose.connect(MONGODB_URI)
     .then(result => {
         User.findOne().then(user => {
             if (!user) {

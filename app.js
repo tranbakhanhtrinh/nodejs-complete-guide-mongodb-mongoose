@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const session = require('express-session');
 const MongoDBStore = require("connect-mongodb-session")(session);
+const csrf = require('csurf')
 
 const adminRoute = require('./routes/admin');
 const shopRoute = require('./routes/shop');
@@ -18,15 +19,24 @@ const app = express();
 const store = new MongoDBStore({
     uri: MONGODB_URI,
     collection: "sessions"
-})
+});
+
+const csrfProtection = csrf();
 
 app.set("view engine", "ejs");
 app.set("views", "views"); // the second param is the name of folder "views"
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(session({ secret: "my secret", resave: false, saveUninitialized: false, store: store }))
-// console.log(path.join(__dirname));
+app.use(session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}))
+
+//csrf uses session by default so put csrf under session.
+app.use(csrfProtection);
 
 app.use((req, res, next) => {
     if (!req.session.user) {
@@ -38,6 +48,13 @@ app.use((req, res, next) => {
             next()
         })
         .catch(err => { console.log(err) })
+})
+
+app.use((req, res, next) => {
+    //locals is used to pass variables to all views.
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    next();
 })
 
 app.use("/admin", adminRoute); // if we add the first argument, the routes in adminRoute will automatically add a prefix /admin

@@ -8,7 +8,6 @@ exports.getIndex = (req, res, next) => {
                 pageTitle: "Shop",
                 prods: products,
                 path: '/',
-                isAuthenticated: req.session.isLoggedIn
             })
         })
         .catch(err => { console.log(err) });
@@ -72,7 +71,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
     const prodId = req.body.productId;
-    req.sesstion.user.removeItemFromCart(prodId)
+    req.user.removeItemFromCart(prodId)
         .then(result => {
             res.redirect("/cart");
         })
@@ -89,7 +88,7 @@ exports.postOrder = (req, res, next) => {
             });
             const order = new Order({
                 user: {
-                    name: req.user.name,
+                    email: req.user.email,
                     userId: req.user
                 },
                 products: products

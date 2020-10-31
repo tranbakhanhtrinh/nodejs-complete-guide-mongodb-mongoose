@@ -50,19 +50,6 @@ const port = process.env.PORT || 3000;
 
 mongoose.connect(MONGODB_URI)
     .then(result => {
-        User.findOne().then(user => {
-            if (!user) {
-                const user = new User({
-                    name: "Trinh",
-                    email: "test@test.com",
-                    cart: {
-                        items: []
-                    }
-                })
-                user.save();
-            }
-        })
-
         app.listen(port, () => {
             console.log(`Server is runnig on port ${port}`);
         })

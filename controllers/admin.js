@@ -3,7 +3,7 @@ const Product = require("../models/product");
 exports.getProducts = (req, res, next) => {
     Product.find()
         // .select('title price -_id')  chọn field muốn lấy. thêm dấu "-" trước field ko muốn lấy
-        // .populate('userId') lấy những data có liên quan. Vd: lấy userId trong model Product rồi tra trong model User, lấy thông tin user mà có cái userId đó
+        // .populate('userId', 'name') lấy những data có liên quan. Vd: lấy userId trong model Product rồi tra trong model User, lấy thông tin user mà có cái userId đó, truyền thêm parameter 'name' để lấy chỉ mỗi name mà có userId đó
         .then(products => {
             res.render("admin/products", {
                 pageTitle: "Admin Products",

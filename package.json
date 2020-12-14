@@ -1,40 +1,44 @@
 {
-  "name": "nodejs-complete-guide",
-  "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
-  "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "body-parser": "^1.19.0",
-    "connect-flash": "^0.1.1",
-    "connect-mongodb-session": "^2.4.1",
-    "csurf": "^1.11.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1",
-    "express-session": "^1.17.1",
-    "express-validator": "^6.6.1",
-    "mongodb": "^3.6.2",
-    "mongoose": "^5.10.11",
-    "multer": "^1.4.2",
-    "nodemailer": "^6.4.14",
-    "nodemailer-sendgrid-transport": "^0.2.0",
-    "nodemon": "^2.0.4",
-    "pdfkit": "^0.11.0",
-    "stripe": "^8.126.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/tranbakhanhtrinh/nodejs-complete-guide.git"
-  },
-  "author": "Walle",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/tranbakhanhtrinh/nodejs-complete-guide/issues"
-  },
-  "homepage": "https://github.com/tranbakhanhtrinh/nodejs-complete-guide#readme"
+    "name": "nodejs-complete-guide",
+    "version": "1.0.0",
+    "description": "",
+    "main": "app.js",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.0",
+        "compression": "^1.7.4",
+        "connect-flash": "^0.1.1",
+        "connect-mongodb-session": "^2.4.1",
+        "csurf": "^1.11.0",
+        "ejs": "^3.1.5",
+        "express": "^4.17.1",
+        "express-session": "^1.17.1",
+        "express-validator": "^6.6.1",
+        "helmet": "^4.2.0",
+        "mongodb": "^3.6.2",
+        "mongoose": "^5.10.11",
+        "morgan": "^1.10.0",
+        "multer": "^1.4.2",
+        "nodemailer": "^6.4.14",
+        "nodemailer-sendgrid-transport": "^0.2.0",
+        "nodemon": "^2.0.4",
+        "pdfkit": "^0.11.0",
+        "stripe": "^8.126.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "MONGO_USER=tranbakhanhtrinh MONGO_PASSWORD=airblade08 MONGO_DEFAULT_DATABASE=nodejs-complete-guide-mongo-mongoose STRIPE_KEY=sk_test_51HtpPJGLYrcOXf0rBUEfSiBvnGjokeq9TmBsZZUdgQ6nrvG0qFTIIZUMm2XmmVSJQxDrJihNO4XhhU9N6jmproz700XWpnSzj9 node app.js",
+        "start:dev": "nodemon app.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/tranbakhanhtrinh/nodejs-complete-guide.git"
+    },
+    "author": "Walle",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/tranbakhanhtrinh/nodejs-complete-guide/issues"
+    },
+    "homepage": "https://github.com/tranbakhanhtrinh/nodejs-complete-guide#readme"
 }

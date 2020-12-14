@@ -1,0 +1,8 @@
+{
+    "env": {
+        "MONGO_USER": "tranbakhanhtrinh",
+        "MONGO_PASSWORD": "airblade08",
+        "MONGO_DEFAULT_DATABASE": "nodejs-complete-guide-mongo-mongoose",
+        "STRIPE_KEY": "sk_test_51HtpPJGLYrcOXf0rBUEfSiBvnGjokeq9TmBsZZUdgQ6nrvG0qFTIIZUMm2XmmVSJQxDrJihNO4XhhU9N6jmproz700XWpnSzj9"
+    }
+}
